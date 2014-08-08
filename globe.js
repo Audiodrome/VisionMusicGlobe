@@ -125,13 +125,13 @@ function init() {
 	mesh.scale.set( 1.1, 1.1, 1.1 );
 	//scene.add(mesh);
 
-	geometry = new THREE.BoxGeometry(0.75, 0.75, 1);
+	geometry = new THREE.BoxGeometry(1.0, 1.0, 1);
 	geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,-0.5));
 
 	point = new THREE.Mesh(geometry);
 
 	renderer = new THREE.WebGLRenderer({antialias: true});
-	renderer.setClearColor( 0x181818 , 1 );
+	//renderer.setClearColor( 0x555555 , 1 );
 	
 	renderer.setSize(w, h);
 
@@ -343,7 +343,7 @@ function createPoints(){
 	
 	for (var i = 0; i < 360; i++){
 		points[i] = new THREE.Mesh(wedge[i], new THREE.MeshBasicMaterial({
-					color: '#'+Math.floor(Math.random()*16777215).toString(16),
+					//color: '#'+Math.floor(Math.random()*16777215).toString(16),
 					//color: 0x00b4ff,
 					vertexColors: THREE.FaceColors,
 					morphTargets: true
@@ -351,10 +351,88 @@ function createPoints(){
 
 		scene.add(points[i]);
 	}
-	for (var i = 0; i < 360; i++){
-		console.log ('i: ', i);
-		console.log ('undefined? ', points[i]);
+
+	Rainbow_Gradient();
+}
+
+function Rainbow_Gradient(){
+
+	var red = 1;
+	var green = 0;
+	var blue = 1;
+	for (var i = 0; i < 60; i++){
+		//points[i].morphTargetInfluences[0] = average_seg[i]/100;
+		
+		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
+			points[i].geometry.faces[j].color.setRGB(red,green,blue);
+			console.log('red value', red);	
+		}
+		blue -= 0.0167;
+		//red += 0.0167;
+	
 	}
+
+	for (var i = 60; i < 120; i++){
+		//points[i].morphTargetInfluences[0] = average_seg[i]/100;
+		
+		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
+			points[i].geometry.faces[j].color.setRGB(red,green,blue);
+			console.log('red value', red);	
+		}
+		//red -= 0.0167;
+		green += 0.0167;
+		
+	}
+
+	for (var i = 120; i < 180; i++){
+		//points[i].morphTargetInfluences[0] = average_seg[i]/100;
+		
+		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
+			points[i].geometry.faces[j].color.setRGB(red,green,blue);
+			console.log('red value', red);	
+		}
+		red -= 0.0167;
+		//blue += 0.0167;
+		
+	}
+
+	for (var i = 180; i < 240; i++){
+		//points[i].morphTargetInfluences[0] = average_seg[i]/100;
+		
+		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
+			points[i].geometry.faces[j].color.setRGB(red,green,blue);
+			console.log('red value', red);	
+		}
+		//red -= 0.0083;
+		blue += 0.0167;
+	
+	}
+
+	for (var i = 240; i < 300; i++){
+		//points[i].morphTargetInfluences[0] = average_seg[i]/100;
+		
+		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
+			points[i].geometry.faces[j].color.setRGB(red,green,blue);
+			console.log('red value', red);	
+		}
+		green -= 0.0167;
+		//blue += 0.0083;
+		
+	}
+
+	for (var i = 300; i < 360; i++){
+		//points[i].morphTargetInfluences[0] = average_seg[i]/100;
+		
+		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
+			points[i].geometry.faces[j].color.setRGB(red,green,blue);
+			console.log('red value', red);	
+		}
+		//blue -= 0.0083;
+		red += 0.0167;
+		
+	}
+
+
 }
 
 function onMouseDown(event) {
@@ -488,8 +566,8 @@ function render(average_seg, average_all) {
 
 	for (var i = 0; i < 360; i++){
 		points[i].geometry.colorsNeedUpdate = true;
-		//points[i].rotation.x += intensity * 0.01;
-		//points[i].rotation.y += intensity * 0.025;
+		points[i].rotation.x += intensity * 0.01;
+		points[i].rotation.y += intensity * 0.025;
 	}
 
 	var current = performance.now();
@@ -566,13 +644,15 @@ function render(average_seg, average_all) {
 
 
 */
-	
+	//var red = 0;	
 	for (var i = 0; i < 360; i++){
 		points[i].morphTargetInfluences[0] = average_seg[i]/100;
 
 		
-		//for (var j = 0; j < points[i].geometry.faces.length; j++ )
-			//points[i].geometry.faces[j].color.setRGB( 0, 0,0);	
+		//for (var j = 0; j < points[i].geometry.faces.length; j++ ){
+			//points[i].geometry.faces.color.setRGB( 0, 0,1);	
+		//}
+		//red += 0.002
 	}
 	//for (var i = 0; i < 135; i++){
 	//	points[i+225].morphTargetInfluences[0] = average_seg[i]/100;
