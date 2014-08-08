@@ -352,7 +352,7 @@ function createPoints(){
 		scene.add(points[i]);
 	}
 
-	Rainbow_Gradient();
+	//Rainbow_Gradient();
 }
 
 function Rainbow_Gradient(){
@@ -361,75 +361,57 @@ function Rainbow_Gradient(){
 	var green = 0;
 	var blue = 1;
 	for (var i = 0; i < 60; i++){
-		//points[i].morphTargetInfluences[0] = average_seg[i]/100;
 		
 		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
 			points[i].geometry.faces[j].color.setRGB(red,green,blue);
 			console.log('red value', red);	
 		}
 		blue -= 0.0167;
-		//red += 0.0167;
-	
 	}
 
 	for (var i = 60; i < 120; i++){
-		//points[i].morphTargetInfluences[0] = average_seg[i]/100;
 		
 		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
 			points[i].geometry.faces[j].color.setRGB(red,green,blue);
 			console.log('red value', red);	
 		}
-		//red -= 0.0167;
-		green += 0.0167;
-		
+		green += 0.0167;		
 	}
 
 	for (var i = 120; i < 180; i++){
-		//points[i].morphTargetInfluences[0] = average_seg[i]/100;
 		
 		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
 			points[i].geometry.faces[j].color.setRGB(red,green,blue);
 			console.log('red value', red);	
 		}
-		red -= 0.0167;
-		//blue += 0.0167;
-		
+		red -= 0.0167;		
 	}
 
 	for (var i = 180; i < 240; i++){
-		//points[i].morphTargetInfluences[0] = average_seg[i]/100;
 		
 		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
 			points[i].geometry.faces[j].color.setRGB(red,green,blue);
 			console.log('red value', red);	
 		}
-		//red -= 0.0083;
 		blue += 0.0167;
-	
 	}
 
 	for (var i = 240; i < 300; i++){
-		//points[i].morphTargetInfluences[0] = average_seg[i]/100;
 		
 		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
 			points[i].geometry.faces[j].color.setRGB(red,green,blue);
 			console.log('red value', red);	
 		}
 		green -= 0.0167;
-		//blue += 0.0083;
-		
 	}
 
 	for (var i = 300; i < 360; i++){
-		//points[i].morphTargetInfluences[0] = average_seg[i]/100;
 		
 		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
 			points[i].geometry.faces[j].color.setRGB(red,green,blue);
 			console.log('red value', red);	
 		}
-		//blue -= 0.0083;
 		red += 0.0167;
-		
 	}
 
 
@@ -573,92 +555,11 @@ function render(average_seg, average_all) {
 	var current = performance.now();
 	var delta = (current - last) / 25;
 
-
-
-
-	var blue = new THREE.Color (0x00b3FF);
-	var green = new THREE.Color (0x37FF00);
-	var yellow = new THREE.Color (0xFFFF00);
-	var orange = new THREE.Color (0xFF8800);
-	var red = new THREE.Color (0xFF2200)
-
-/*	
-
-	if (delta > 1) {
-		delta = 1; // safety cap on large deltas
-		last = current;
-
-		//console.log ('intensity: ', intensity);
-		
-		if (intensity < 0.5){
-
-			for (var i = 0; i < 360; i++){
-				var temp = points[i].geometry.faces.length;
-				for (var j = 0; j < temp; j++ )
-					points[i].geometry.faces[j].color = blue;
-			}
-			
-		}
-		else if (intensity >= 0.5 && intensity < 0.8){
-			for (var i = 0; i < 360; i++){
-				var temp = points[i].geometry.faces.length;
-				for (var j = 0; j < temp; j++ )
-					points[i].geometry.faces[j].color = green;
-				//console.log ('did i get here');
-			}
-		}
-		else if (intensity >= 0.8 && intensity < 1.1){
-			for (var i = 0; i < 360; i++){
-				var temp = points[i].geometry.faces.length;
-				for (var j = 0; j < temp; j++ )
-					points[i].geometry.faces[j].color = yellow;
-			}
-		}
-		else if (intensity >= 1.1 && intensity < 1.4){
-			for (var i = 0; i < 360; i++){
-				var temp = points[i].geometry.faces.length;
-				for (var j = 0; j < temp; j++ )
-					points[i].geometry.faces[j].color = orange;
-			}
-		}
-		else {
-			for (var i = 0; i < 360; i++){
-				var temp = points[i].geometry.faces.length;
-				for (var j = 0; j < temp; j++ )
-					points[i].geometry.faces[j].color = red;
-			}
-		}	
-
-	}
-
-/*
-	for (var i = 0; i < 4; i++ ){
-		points[i].morphTargetInfluences[0] = average_seg[i+4]/100;
-
-	
-	}
-	for (var i = 4; i < 8; i++ ){
-		points[i].morphTargetInfluences[0] = average_seg[i-4]/100;
-	
-	}
-
-
-*/
-	//var red = 0;	
 	for (var i = 0; i < 360; i++){
 		points[i].morphTargetInfluences[0] = average_seg[i]/100;
 
-		
-		//for (var j = 0; j < points[i].geometry.faces.length; j++ ){
-			//points[i].geometry.faces.color.setRGB( 0, 0,1);	
-		//}
-		//red += 0.002
 	}
-	//for (var i = 0; i < 135; i++){
-	//	points[i+225].morphTargetInfluences[0] = average_seg[i]/100;
 
-	
-	//}
 
 	camera.lookAt(mesh.position);
 
