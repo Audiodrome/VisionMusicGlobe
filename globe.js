@@ -291,9 +291,9 @@ function addData2 (){
 		lng = cities[i + 1];
 		
 		color = new THREE.Color(0xffffff);
-		//size = cities[i + 2];
-		//size = size*300;
-		size = 300;
+		size = cities[i + 2];
+		size = size*300;
+		//size = 300;
 
 		for (var j = 0; j <= 180; j++){
 			if (lng === j)
