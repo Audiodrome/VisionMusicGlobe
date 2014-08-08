@@ -291,8 +291,9 @@ function addData2 (){
 		lng = cities[i + 1];
 		
 		color = new THREE.Color(0xffffff);
-		size = cities[i + 2];
-		size = size*300;
+		//size = cities[i + 2];
+		//size = size*300;
+		size = 300;
 
 		for (var j = 0; j <= 180; j++){
 			if (lng === j)
@@ -538,17 +539,19 @@ function render(average_seg, average_all) {
 
 	var intensity = average_all / 100;
 
-	for (var i = 0; i < 360; i++){
-		points[i].geometry.colorsNeedUpdate = true;
-		points[i].rotation.x += intensity * 0.01;
-		points[i].rotation.y += intensity * 0.025;
-	}
+	//for (var i = 0; i < 360; i++){
+	//	points[i].geometry.colorsNeedUpdate = true;
+	//	points[i].rotation.x += intensity * 0.01;
+		
+	//}
 
 	var current = performance.now();
 	var delta = (current - last) / 25;
 
 	for (var i = 0; i < 360; i++){
+		points[i].rotation.y += intensity * 0.025;
 		points[i].morphTargetInfluences[0] = average_seg[i]/100;
+		
 
 	}
 
