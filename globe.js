@@ -352,7 +352,7 @@ function createPoints(){
 		scene.add(points[i]);
 	}
 
-	//Rainbow_Gradient();
+	Rainbow_Gradient();
 }
 
 function Rainbow_Gradient(){
@@ -363,8 +363,7 @@ function Rainbow_Gradient(){
 	for (var i = 0; i < 60; i++){
 		
 		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
-			points[i].geometry.faces[j].color.setRGB(red,green,blue);
-			console.log('red value', red);	
+			points[i].geometry.faces[j].color.setRGB(red,green,blue);	
 		}
 		blue -= 0.0167;
 	}
@@ -372,8 +371,7 @@ function Rainbow_Gradient(){
 	for (var i = 60; i < 120; i++){
 		
 		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
-			points[i].geometry.faces[j].color.setRGB(red,green,blue);
-			console.log('red value', red);	
+			points[i].geometry.faces[j].color.setRGB(red,green,blue);	
 		}
 		green += 0.0167;		
 	}
@@ -381,8 +379,7 @@ function Rainbow_Gradient(){
 	for (var i = 120; i < 180; i++){
 		
 		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
-			points[i].geometry.faces[j].color.setRGB(red,green,blue);
-			console.log('red value', red);	
+			points[i].geometry.faces[j].color.setRGB(red,green,blue);	
 		}
 		red -= 0.0167;		
 	}
@@ -390,8 +387,7 @@ function Rainbow_Gradient(){
 	for (var i = 180; i < 240; i++){
 		
 		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
-			points[i].geometry.faces[j].color.setRGB(red,green,blue);
-			console.log('red value', red);	
+			points[i].geometry.faces[j].color.setRGB(red,green,blue);	
 		}
 		blue += 0.0167;
 	}
@@ -400,7 +396,6 @@ function Rainbow_Gradient(){
 		
 		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
 			points[i].geometry.faces[j].color.setRGB(red,green,blue);
-			console.log('red value', red);	
 		}
 		green -= 0.0167;
 	}
@@ -409,12 +404,9 @@ function Rainbow_Gradient(){
 		
 		for (var j = 0; j < points[i].geometry.faces.length; j++ ){
 			points[i].geometry.faces[j].color.setRGB(red,green,blue);
-			console.log('red value', red);	
 		}
 		red += 0.0167;
 	}
-
-
 }
 
 function onMouseDown(event) {
