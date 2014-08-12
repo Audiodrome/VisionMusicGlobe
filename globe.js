@@ -124,7 +124,7 @@ function init() {
 	point = new THREE.Mesh(geometry);
 
 	renderer = new THREE.WebGLRenderer({antialias: true});
-	renderer.setSize(1280,720);
+	renderer.setSize(w,h);
 
 	renderer.domElement.style.position = 'absolute';
 
