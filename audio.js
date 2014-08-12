@@ -229,10 +229,10 @@ window.onload = function init() {
     };
 
     uiUpdater.toggleControlPanel();
+    var trackUrl = 'https://soundcloud.com/youtellmelondon/phazz-lionheart';
     // on load, check to see if there is a track token in the URL, and if so, load that automatically
     if (window.location.hash) {
-        var trackUrl = 'https://soundcloud.com/' + window.location.hash.substr(1);
-        //var trackUrl = 'https://soundcloud.com/neus/pharrell-williams-happy-neus';
+        trackUrl = 'https://soundcloud.com/' + window.location.hash.substr(1);
         console.log('trackUrl ', trackUrl);
         loadAndUpdate(trackUrl);
     }
