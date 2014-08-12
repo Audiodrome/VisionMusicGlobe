@@ -230,12 +230,12 @@ window.onload = function init() {
 
     uiUpdater.toggleControlPanel();
     // on load, check to see if there is a track token in the URL, and if so, load that automatically
-    //if (window.location.hash) {
-        //var trackUrl = 'https://soundcloud.com/' + window.location.hash.substr(1);
-        var trackUrl = 'https://soundcloud.com/neus/pharrell-williams-happy-neus';
+    if (window.location.hash) {
+        var trackUrl = 'https://soundcloud.com/' + window.location.hash.substr(1);
+        //var trackUrl = 'https://soundcloud.com/neus/pharrell-williams-happy-neus';
         console.log('trackUrl ', trackUrl);
         loadAndUpdate(trackUrl);
-    //}
+    }
 
     // handle the form submit event to load the new URL
     form.addEventListener('submit', function(e) {
