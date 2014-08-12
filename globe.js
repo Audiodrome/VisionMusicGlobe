@@ -45,12 +45,10 @@ var Shaders = {
 
 var stats;
 
-
 var camera, scene, renderer, w, h;
 var mesh, atmosphere, point;
 
 var wedge = [];
-
 var points = [];
 
 var overRenderer;
@@ -68,11 +66,6 @@ var padding = 40;
 var PI_HALF = Math.PI / 2;
 
 var last = performance.now();
-
-//init();
-//addData();
-//createPoints();
-//animate();
 
 function init() {
 
@@ -131,8 +124,6 @@ function init() {
 	point = new THREE.Mesh(geometry);
 
 	renderer = new THREE.WebGLRenderer({antialias: true});
-	//renderer.setClearColor( 0x555555 , 1 );
-	
 	renderer.setSize(w, h);
 
 	renderer.domElement.style.position = 'absolute';
@@ -167,92 +158,6 @@ function addData (){
 	var lat, lng, size, i, color, step;
 	step = 3;
 	var citiesL = cities.length;
-	var lat_array = [];
-	var lng_array = [];
-/*
-	for (i = 0, var j = 0; i < citiesL; i += step){
-		lat_array[j] = cities[i];
-		lng_array[j] = cities[i+1];
-		j++;
-	}
-
-	lat_array.sort();
-	lng_array.sort();
-*/
-	for (i = 0; i < 8; i++){
-		wedge[i] = new THREE.Geometry();
-	}
-
-	for (i = 0; i < citiesL; i += step){
-		lat = cities[i];
-		lng = cities[i + 1];
-			
-		color = new THREE.Color(0xffffff);
-		size = 0;
-
-		if (lng >= 0 && lng <= 45)
-			addPoint(lat, lng, size, color, wedge[0]);
-		else if (lng > 45 && lng <= 90) 
-			addPoint(lat, lng, size, color, wedge[1]);
-		else if (lng > 90 && lng <= 135) 
-			addPoint(lat, lng, size, color, wedge[2]);
-		else if (lng > 135 && lng <= 180) 
-			addPoint(lat, lng, size, color, wedge[3]);
-		else if (lng < 0 && lng >= -45)
-			addPoint(lat, lng, size, color, wedge[4]);
-		else if (lng < -45 && lng >= -90)
-			addPoint(lat, lng, size, color, wedge[5]);
-		else if (lng < -90 && lng >= -135)
-			addPoint(lat, lng, size, color, wedge[6]);
-		else if (lng < -135 && lng >= -180)
-			addPoint(lat, lng, size, color, wedge[7]);
-	}
-	
-	var subgeo = [];
-
-	for (var i = 0; i < 8; i++){
-		subgeo[i] = new THREE.Geometry();
-	}
-	
-	for (i = 0; i < citiesL; i += step){
-		lat = cities[i];
-		lng = cities[i + 1];
-		
-		color = new THREE.Color(0xffffff);
-		size = cities[i + 2];
-		size = size*300;
-
-
-		if (lng >= 0 && lng <= 45)
-			addPoint(lat, lng, size, color, subgeo[0]);
-		else if (lng > 45 && lng <= 90) 
-			addPoint(lat, lng, size, color, subgeo[1]);
-		else if (lng > 90 && lng <= 135) 
-			addPoint(lat, lng, size, color, subgeo[2]);
-		else if (lng > 135 && lng <= 180) 
-			addPoint(lat, lng, size, color, subgeo[3]);
-		else if (lng < 0 && lng >= -45)
-			addPoint(lat, lng, size, color, subgeo[4]);
-		else if (lng < -45 && lng >= -90)
-			addPoint(lat, lng, size, color, subgeo[5]);
-		else if (lng < -90 && lng >= -135)
-			addPoint(lat, lng, size, color, subgeo[6]);
-		else if (lng < -135 && lng >= -180)
-			addPoint(lat, lng, size, color, subgeo[7]);
-	}
-
-	for (var i = 0; i < 8; i++){
-		wedge[i].morphTargets.push({'name': 'target', vertices: subgeo[i].vertices});
-	}
-	
-	
-}
-
-function addData2 (){
-	
-	var lat, lng, size, i, color, step;
-	step = 3;
-	var citiesL = cities.length;
 	
 	for (i = 0; i < 360; i++){
 		wedge[i] = new THREE.Geometry();
@@ -275,9 +180,7 @@ function addData2 (){
 				j = 360 + j;
 				addPoint(lat, lng, size, color, wedge[j]);
 			}
-
 		}
-
 	}
 	
 	var subgeo = [];
@@ -293,6 +196,7 @@ function addData2 (){
 		color = new THREE.Color(0xffffff);
 		size = cities[i + 2];
 		size = size*300;
+		//size = Math.random() * 50;
 
 		for (var j = 0; j <= 180; j++){
 			if (lng === j)
@@ -311,8 +215,6 @@ function addData2 (){
 	for (var i = 0; i < 360; i++){
 		wedge[i].morphTargets.push({'name': 'target', vertices: subgeo[i].vertices});
 	}
-	
-	
 }
 
 function addPoint(lat, lng, size, color, subgeo){
@@ -333,6 +235,9 @@ function addPoint(lat, lng, size, color, subgeo){
 
 		point.geometry.faces[i].color = color;
 	}
+
+
+	//THREE.GeometryUtils.merge(subgeo, point);
 
 	subgeo.merge (point.geometry, point.matrix);
 }
@@ -407,6 +312,7 @@ function Rainbow_Gradient(){
 		}
 		red += 0.0167;
 	}
+	console.log('i only happened once');
 }
 
 function onMouseDown(event) {
@@ -487,33 +393,6 @@ function zoom(delta) {
 function animate() {
 	requestAnimationFrame(animate);
 
-	var array = new Uint8Array (analyser.frequencyBinCount);
-	analyser.getByteFrequencyData(array);
-
-	var average_seg = [];
-
-	var begin = 0;
-	var end = 64;
-
-	for (var i = 0; i < 7; i++){
-		average_seg[i] = getAverageVolume (array, begin, end, 128);
-		begin = begin + 64;
-		end = end + 64;
-	}
-	end = array.length;
-	average_seg[7] = getAverageVolume (array, begin, end, 128);
-
-	var average_all;
-
-	average_all = getAverageVolume (array, 0, array.length, 512);
-
-	render(average_seg, average_all);
-	stats.update();
-}
-
-function animate2() {
-	requestAnimationFrame(animate2);
-
 	var average_seg = new Uint8Array (analyser.frequencyBinCount);
 	analyser.getByteFrequencyData(average_seg);
 
@@ -538,22 +417,21 @@ function render(average_seg, average_all) {
 
 	var intensity = average_all / 100;
 
+/*	
 	for (var i = 0; i < 360; i++){
-		points[i].geometry.colorsNeedUpdate = true;
-		points[i].rotation.x += intensity * 0.01;
-		points[i].rotation.y += intensity * 0.025;
-	}
-
-	var current = performance.now();
-	var delta = (current - last) / 25;
-
-	for (var i = 0; i < 360; i++){
+		points[i].rotation.y += intensity * 0.015;
 		points[i].morphTargetInfluences[0] = average_seg[i]/100;
-
 	}
-
-
+*/
+	for (var i = 20; i < 360; i++){
+		points[i].rotation.y += intensity * 0.015;
+		points[i-20].morphTargetInfluences[0] = average_seg[i]/100;
+	}
+	for (var i = 0; i < 20; i++){
+		points[i].rotation.y += intensity * 0.015;
+		points[i+340].morphTargetInfluences[0] = average_seg[i]/100;
+	}
+	
 	camera.lookAt(mesh.position);
-
 	renderer.render(scene, camera);
 }

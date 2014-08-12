@@ -54,6 +54,8 @@ a:hover, a:active {
 }
 #info {
     display: none;
+    background: #3d003d;
+    color: #000000;
 }
 #controlPanel {
     z-index: 50;
@@ -137,7 +139,7 @@ a:hover, a:active {
     border: none;
 }
 #player {
-    width: 95%;
+    width: 50%;
 }
 #messageBox {
     position: absolute;
@@ -174,10 +176,10 @@ footer {
     color: #999;
     height: 35px;
 }
-#credit, #github {
+#credit{
     display: inline-block;
-    padding-top: 8px;
-    padding-right: 10px;
+    padding-top: 11px;
+    padding-left: 10px;
 }
 #scLogo {
     float: right;

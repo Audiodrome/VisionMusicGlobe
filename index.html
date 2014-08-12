@@ -1,133 +1,122 @@
 <!DOCTYPE HTML>
 <html lang="en">
-  <head>
-    <title>WebGL Globe Audio Visualisation</title>
-    <meta charset="utf-8">
-    <style type="text/css">
-      html {
-        height: 100%;
-      }
-      body {
-        margin: 0;
-        padding: 0;
-        background: #000000 url(loading.gif) center center no-repeat;
-        color: #ffffff;
-        font-family: sans-serif;
-        font-size: 13px;
-        line-height: 20px;
-        height: 100%;
-      }
+	<head>
+		<title>WebGL Globe Visualisation</title>
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/style.css">
+		<meta charset="utf-8">
+		<style type="text/css">
+			html {
+				height: 100%;
+			}
+			body {
+				background: #000000 url(loading.gif) center center no-repeat;
+				color: #000000;
+				font-family: sans-serif;
+				font-size: 14px;
+			}
 
-      #info {
+			.bull {
+				padding: 0 5px;
+				color: #555;
+			}
 
-        font-size: 11px;
-        position: absolute;
-        bottom: 5px;
-        background-color: rgba(0,0,0,0.8);
-        border-radius: 3px;
-        right: 10px;
-        padding: 10px;
+			#title {
+				position: absolute;
+				top: 20px;
+				width: 270px;
+				left: 20px;
+				background-color: rgba(0,0,0,0.2);
+				border-radius: 3px;
+				font: 20px Arial;
+				padding: 10px;
+			}
 
-      }
+			#ce span {
+				display: none;
+			}
 
-      #currentInfo {
-        width: 270px;
-        position: absolute;
-        left: 20px;
-        top: 63px;
-
-        background-color: rgba(0,0,0,0.2);
-
-        border-top: 1px solid rgba(255,255,255,0.4);
-        padding: 10px;
-      }
-
-      a {
-        color: #aaa;
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-
-      .bull {
-        padding: 0 5px;
-        color: #555;
-      }
-
-      #title {
-        position: absolute;
-        top: 20px;
-        width: 270px;
-        left: 20px;
-        background-color: rgba(0,0,0,0.2);
-        border-radius: 3px;
-        font: 20px Arial;
-        padding: 10px;
-      }
-
-      #ce span {
-        display: none;
-      }
-
-      #ce {
-        width: 107px;
-        height: 55px;
-        display: block;
-        position: absolute;
-        bottom: 15px;
-        left: 20px;
-        background: url(ce.png);
-      }
+			#ce {
+				width: 107px;
+				height: 55px;
+				display: block;
+				position: absolute;
+				top: 10px;
+				left: 10px;
+				background: url(ce.png);
+			}
 
 
-    </style>
-  </head>
-  <body>
+		</style>
+	</head>
+	<body>
 
-  <div id="container"></div>
+	<div id="container"></div>
 
-  <div id="info">
-    <strong><a href="http://www.chromeexperiments.com/globe">WebGL Globe</a></strong> <span class="bull">&bull;</span> Created by the Google Data Arts Team <span class="bull"></span></a>
-  </div>
+	<div id="title">
+		Globe Audio Visualizer
+	</div>
 
-  <div id="title">
-    Globe Audio Visualizer
-  </div>
+	<div id="info">
+		Globe visualisation with Soundcloud integration.<br>
+		Soundcloud implementation created by Michael Bromley. <a href="https://github.com/michaelbromley">Mister Bromley's Github</a><br>
+		<a href="http://www.chromeexperiments.com/globe">WebGL Globe</a></strong> <span class="bull">&bull;</span> Created by the Google Data Arts Team <span class="bull"></span></a><br><br>
+		<b>Instructions</b><br>
+		Paste the URL of a Soundcloud track or playlist into form and press enter.<br><br>
+		<b>Example track:</b> https://soundcloud.com/manchesterorchestra/simple-math<br>
+		<b>Example playlist:</b> https://soundcloud.com/manchesterorchestra/sets/simple-math-album-stream<br><br>
+		<b>Controls</b><br>
+		<b>space bar</b> - toggle play/pause<br>
+		<b>right/left arrow</b> - skip forward/backwards through playlist<br>
+	</div>
 
-  <a id="ce" href="http://www.chromeexperiments.com/globe">
-    <span>This is a Chrome Experiment</span>
-  </a>
+	<div id="visualizer"></div>
 
-  <script type="text/javascript" src="third-party/Detector.js"></script>
-  <script type="text/javascript" src="third-party/stats.min.js"></script>
-  <script type="text/javascript" src="third-party/three.min.js"></script>
-  <script type="text/javascript" src="third-party/Tween.js"></script>
-  <script type="text/javascript" src="audio.js"></script>
-  <script type="text/javascript" src="cities.js"></script>
-  <script type="text/javascript" src="globe.js"></script>
-  <script type="text/javascript">
+	<div id="controlPanel" class="hidden">
+			<div id="tab"><a href="#" id="toggleButton"><i class="icon-menu"></i></a></div>
+			<div id="trackInfoPanel" class="hidden">
+				<img id="infoImage" src="">
+				<div id="infoArtist"></div>
+				<div id="infoTrack"></div>
+			</div>
+			<div id="playerControls">
+					<form id="form">
+							<input id="input" placeholder="Paste Soundcloud URL here (https://soundcloud.com/artist/track)">
+							<button type="submit" id="submit"><i class="icon-play"></i></button><br>
+					</form>
+					<audio id="player" controls="" autoplay preload="auto"></audio>
+			</div>
+	</div>
 
-  if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-  
-  
-  start();
-  initAudioNodes();
-  loadMusic(url);
-  init();
-  //addData();
-  addData2();
-  createPoints();
-  //animate();
-  animate2();
-      
-  document.body.style.backgroundImage = 'none'; // remove loading
-    
+	<div id="messageBox" class="hidden">
+	</div>
 
+	<footer>
+			<a href="#" id="credit"> <i class="icon-info"></i> About</a>
+			<span id="scLogo"><a href="http://soundcloud.com/"><img src="assets/powered_by_white.png"></a></span>
+			
+	</footer>
+<!--
+	<a id="ce" href="http://www.chromeexperiments.com/globe">
+		<span>This is a Chrome Experiment</span>
+	</a>
+-->
 
+	<script type="text/javascript" src="third-party/Detector.js"></script>
+	<script type="text/javascript" src="third-party/stats.min.js"></script>
+	<script type="text/javascript" src="third-party/three.min.js"></script>
+	<script type="text/javascript" src="third-party/Tween.js"></script>
+	<script type="text/javascript" src="third-party/Soundcloud.js"></script>
+	<script type="text/javascript" src="cities.js"></script>
+	<script type="text/javascript" src="audio.js"></script>
+	<script type="text/javascript" src="globe.js"></script>
 
+	<script type="text/javascript">
 
-      
-  </script>
-  </body>
+	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+				
+	document.body.style.backgroundImage = 'none'; // remove loading
+		
+	</script>
+	</body>
 </html>
