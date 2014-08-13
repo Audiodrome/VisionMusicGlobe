@@ -125,7 +125,7 @@ function init() {
 
 	renderer = new THREE.WebGLRenderer({antialias: true});
 	renderer.setSize(w,h);
-	renderer.setClearColor(0x232324, 0.5);
+	renderer.setClearColor(0x000000, 0.5);
 
 	renderer.domElement.style.position = 'absolute';
 
