@@ -45,6 +45,7 @@ var SoundCloudAudioSource = function(player) {
     addData();
     createPoints();
     animate();
+    console.log('i got to animate');
 };
 
 /**
