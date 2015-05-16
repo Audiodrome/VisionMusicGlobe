@@ -2,7 +2,7 @@
  * Created by Michael on 31/12/13.
  */
 
-// var source, analyser, audioCtx;
+var source, analyser, audioCtx;
 //update();
 
 function start() {
@@ -19,11 +19,11 @@ function start() {
 
 var SoundCloudAudioSource = function(player) {
     var self = this;
-    var analyser;
-    var audioCtx = new (window.AudioContext || window.webkitAudioContext);
+    //var analyser;
+    //var audioCtx = new (window.AudioContext || window.webkitAudioContext);
     analyser = audioCtx.createAnalyser();
     analyser.fftSize = 1024;
-    var source = audioCtx.createMediaElementSource(player);
+    source = audioCtx.createMediaElementSource(player);
     source.connect(analyser);
     analyser.connect(audioCtx.destination);
  
@@ -205,7 +205,7 @@ var UiUpdater = function() {
 
 window.onload = function init() {
 
-    //start();
+    start();
 
     var player =  document.getElementById('player');
     var uiUpdater = new UiUpdater();
