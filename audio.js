@@ -2,7 +2,9 @@
  * Created by Michael on 31/12/13.
  */
 
-var source, analyser, audioCtx;
+var source;
+var analyser;
+var audioCtx = new (window.AudioContext || window.webkitAudioContext);
 //update();
 
 function start() {
