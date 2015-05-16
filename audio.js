@@ -38,11 +38,11 @@ var SoundCloudAudioSource = function(player) {
     }
     //console.log('i got to animate');
     //animate();
-    //init();
-    //addData();
-    //createPoints();
-    //animate();
-    //console.log('i got to animate');
+    init();
+    addData();
+    createPoints();
+    animate();
+    console.log('i got to animate');
 };
 
 /**
