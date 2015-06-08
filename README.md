@@ -1,5 +1,7 @@
 # Globe-Testing-Ground
 
+Currently this version no longer functions.
+
 This project was a learning environment for me to see how Web Standards interact. 
 
 Soundcloud API implementation was done by Michael Bromley
