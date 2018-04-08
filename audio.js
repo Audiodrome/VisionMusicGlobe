@@ -213,7 +213,7 @@ window.onload = function init() {
     start();
 
     var player =  document.getElementById('player');
-    player.src = 'http://api.soundcloud.com/tracks/204082098/stream?client_id=17a992358db64d99e492326797fff3e8';
+    // player.src = 'http://api.soundcloud.com/tracks/204082098/stream?client_id=17a992358db64d99e492326797fff3e8';
     player.controls = true;
     player.autoplay = true;
     player.crossOrigin = 'anonymous';
