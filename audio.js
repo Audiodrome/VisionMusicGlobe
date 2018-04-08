@@ -23,6 +23,9 @@ var SoundCloudAudioSource = function(player) {
     var self = this;
     //var analyser;
     //var audioCtx = new (window.AudioContext || window.webkitAudioContext);
+    // var audio = new Audio();
+	// 	audio.crossOrigin = "anonymous";
+	// 	audio.autoplay = true;
     analyser = audioCtx.createAnalyser();
     analyser.fftSize = 1024;
     source = audioCtx.createMediaElementSource(player);
@@ -210,6 +213,10 @@ window.onload = function init() {
     start();
 
     var player =  document.getElementById('player');
+    player.src = 'http://api.soundcloud.com/tracks/204082098/stream?client_id=17a992358db64d99e492326797fff3e8';
+    player.controls = true;
+    player.autoplay = true;
+    player.crossOrigin = 'anonymous';
     var uiUpdater = new UiUpdater();
     var loader = new SoundcloudLoader(player,uiUpdater);
 
