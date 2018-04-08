@@ -21,11 +21,7 @@ function start() {
 
 var SoundCloudAudioSource = function(player) {
     var self = this;
-    //var analyser;
-    //var audioCtx = new (window.AudioContext || window.webkitAudioContext);
-    // var audio = new Audio();
-	// 	audio.crossOrigin = "anonymous";
-	// 	audio.autoplay = true;
+
     analyser = audioCtx.createAnalyser();
     analyser.fftSize = 1024;
     source = audioCtx.createMediaElementSource(player);
@@ -86,12 +82,12 @@ var SoundcloudLoader = function(player,uiUpdater) {
                     self.sound = sound;
                     self.streamPlaylistIndex = 0;
                     self.streamUrl = function(){
-                        return sound.tracks[self.streamPlaylistIndex].stream_url + '?client_id=' + client_id;
+                        return sound.tracks[self.streamPlaylistIndex].uri + '/stream?client_id=' + client_id;
                     }
                     successCallback();
                 }else{
                     self.sound = sound;
-                    self.streamUrl = function(){ return sound.stream_url + '?client_id=' + client_id; };
+                    self.streamUrl = function(){ return sound.uri + '/stream?client_id=' + client_id; };
                     successCallback();
                 }
             }
