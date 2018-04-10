@@ -50,6 +50,7 @@ var SoundCloudAudioSource = function(player) {
  * Makes a request to the Soundcloud API and returns the JSON data.
  */
 var SoundcloudLoader = function(player,uiUpdater) {
+    console.log('i made it to soundcloudloader');
     var self = this;
     var client_id = "a0fc2925be56cb35a9d7aad0e866f423"; // to get an ID go to http://developers.soundcloud.com/
     this.sound = {};
@@ -68,34 +69,49 @@ var SoundcloudLoader = function(player,uiUpdater) {
         SC.initialize({
             client_id: client_id
         });
-        SC.get('/resolve', { url: track_url }, function(sound) {
-            if (sound.errors) {
-                self.errorMessage = "";
-                for (var i = 0; i < sound.errors.length; i++) {
-                    self.errorMessage += sound.errors[i].error_message + '<br>';
-                }
-                self.errorMessage += 'Make sure the URL has the correct format: https://soundcloud.com/user/title-of-the-track';
-                errorCallback();
-            } else {
-
+        console.log('loader track', track_url);
+        SC.resolve(track_url)
+            .then(function(sound){
+                console.log('sound', sound);
                 if(sound.kind=="playlist"){
                     self.sound = sound;
                     self.streamPlaylistIndex = 0;
                     self.streamUrl = function(){
                         return sound.tracks[self.streamPlaylistIndex].uri + '/stream?client_id=' + client_id;
                     }
-                    console.log('streamUrl: ', self.streamUrl);
-                    this.player.src = self.streamUrl;
+
                     successCallback();
                 }else{
                     self.sound = sound;
                     self.streamUrl = function(){ return sound.uri + '/stream?client_id=' + client_id; };
-                    console.log('streamUrl: ', self.streamUrl);
-                    this.player.src = self.streamUrl;
+
                     successCallback();
                 }
-            }
-        });
+            });
+        // SC.get('/resolve', { url: track_url }, function(sound) {
+        //     if (sound.errors) {
+        //         self.errorMessage = "";
+        //         for (var i = 0; i < sound.errors.length; i++) {
+        //             self.errorMessage += sound.errors[i].error_message + '<br>';
+        //         }
+        //         self.errorMessage += 'Make sure the URL has the correct format: https://soundcloud.com/user/title-of-the-track';
+        //         errorCallback();
+        //     } else {
+
+        //         if(sound.kind=="playlist"){
+        //             self.sound = sound;
+        //             self.streamPlaylistIndex = 0;
+        //             self.streamUrl = function(){
+        //                 return sound.tracks[self.streamPlaylistIndex].uri + '/stream?client_id=' + client_id;
+        //             }
+        //             successCallback();
+        //         }else{
+        //             self.sound = sound;
+        //             self.streamUrl = function(){ return sound.uri + '/stream?client_id=' + client_id; };
+        //             successCallback();
+        //         }
+        //     }
+        // });
     };
 
 
@@ -213,9 +229,9 @@ window.onload = function init() {
     start();
 
     var player =  document.getElementById('player');
-    player.src = 'https://api.soundcloud.com/tracks/157677326/stream?client_id=17a992358db64d99e492326797fff3e8';
-    player.controls = true;
-    player.autoplay = true;
+    // player.src = 'https://api.soundcloud.com/tracks/157677326/stream?client_id=17a992358db64d99e492326797fff3e8';
+    // player.controls = true;
+    // player.autoplay = true;
     player.crossOrigin = 'anonymous';
     var uiUpdater = new UiUpdater();
     var loader = new SoundcloudLoader(player,uiUpdater);
@@ -239,8 +255,8 @@ window.onload = function init() {
     
     // on load, check to see if there is a track token in the URL, and if so, load that automatically
     if (window.location.hash) {
-        var trackUrl = 'https://soundcloud.com/' + window.location.hash.substr(1);
-        console.log('trackUrl ', trackUrl);
+        var trackUrl = 'https://soundcloud.com/' + window.location.hash.substr(2);
+        console.log('location hash trackUrl ', trackUrl);
         loadAndUpdate(trackUrl);
     }else{
         var trackUrl = 'https://soundcloud.com/youtellmelondon/phazz-lionheart';
