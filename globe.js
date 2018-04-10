@@ -98,7 +98,7 @@ function init() {
 
 	mesh = new THREE.Mesh(geometry, material);
 	mesh.rotation.y = Math.PI;
-	scene.add(mesh);
+	// scene.add(mesh);
 
 	shader = Shaders['atmosphere'];
 	uniforms = THREE.UniformsUtils.clone(shader.uniforms);
@@ -116,7 +116,7 @@ function init() {
 
 	mesh = new THREE.Mesh(geometry, material);
 	mesh.scale.set( 1.1, 1.1, 1.1 );
-	scene.add(mesh);
+	// scene.add(mesh);
 
 	geometry = new THREE.BoxGeometry(1.0, 1.0, 1);
 	geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,-0.5));
@@ -236,17 +236,12 @@ function addPoint(lat, lng, size, color, subgeo){
 
 		point.geometry.faces[i].color = color;
 	}
-
-
 	//THREE.GeometryUtils.merge(subgeo, point);
-
 	subgeo.merge (point.geometry, point.matrix);
 }
 
 function createPoints(){
-
 	//var color = '#'+Math.floor(Math.random()*16777215).toString(16);
-	
 	for (var i = 0; i < 360; i++){
 		points[i] = new THREE.Mesh(wedge[i], new THREE.MeshBasicMaterial({
 					//color: '#'+Math.floor(Math.random()*16777215).toString(16),
@@ -254,10 +249,8 @@ function createPoints(){
 					vertexColors: THREE.FaceColors,
 					morphTargets: true
 		}));
-
 		scene.add(points[i]);
 	}
-
 	Rainbow_Gradient();
 }
 
@@ -418,12 +411,6 @@ function render(average_seg, average_all) {
 
 	var intensity = average_all / 100;
 
-/*	
-	for (var i = 0; i < 360; i++){
-		points[i].rotation.y += intensity * 0.015;
-		points[i].morphTargetInfluences[0] = average_seg[i]/100;
-	}
-*/
 	for (var i = 20; i < 360; i++){
 		points[i].rotation.y += intensity * 0.015;
 		points[i-20].morphTargetInfluences[0] = average_seg[i]/100;
