@@ -69,8 +69,8 @@ var last = performance.now();
 
 function init() {
 
-	//container.style.color = '#fff';
-	//container.style.font = '13px/20px Arial, sans-serif';
+	container.style.color = '#fff';
+	container.style.font = '13px/20px Arial, sans-serif';
 
 	var shader, uniforms, material;
 	w = container.offsetWidth || window.innerWidth;
@@ -98,7 +98,7 @@ function init() {
 
 	mesh = new THREE.Mesh(geometry, material);
 	mesh.rotation.y = Math.PI;
-	//scene.add(mesh);
+	scene.add(mesh);
 
 	shader = Shaders['atmosphere'];
 	uniforms = THREE.UniformsUtils.clone(shader.uniforms);
@@ -116,7 +116,7 @@ function init() {
 
 	mesh = new THREE.Mesh(geometry, material);
 	mesh.scale.set( 1.1, 1.1, 1.1 );
-	//scene.add(mesh);
+	scene.add(mesh);
 
 	geometry = new THREE.BoxGeometry(1.0, 1.0, 1);
 	geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,-0.5));
@@ -138,7 +138,7 @@ function init() {
 	stats.domElement.style.top = '0px';
 
 	document.body.appendChild( stats.domElement );
-	//container.appendChild( stats.domElement );
+	container.appendChild( stats.domElement );
 
 	container.appendChild(renderer.domElement);
 	container.addEventListener('mousedown', onMouseDown, false);
