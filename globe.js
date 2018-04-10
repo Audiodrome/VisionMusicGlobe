@@ -134,11 +134,11 @@ function init() {
 
   var widthTemp = w - 100;
   widthTemp = widthTemp.toString() + 'px';
-  stats.domElement.style.left = widthTemp;
+  stats.domElement.style.right = '10px';
   stats.domElement.style.top = '0px';
 
   document.body.appendChild( stats.domElement );
-  container.appendChild( stats.domElement );
+  // container.appendChild( stats.domElement );
 
   container.appendChild(renderer.domElement);
   container.addEventListener('mousedown', onMouseDown, false);
@@ -384,17 +384,17 @@ function zoom(delta) {
 }
 
 function animate() {
-  requestAnimationFrame(animate);
-
+  
   var average_seg = new Uint8Array (analyser.frequencyBinCount);
   analyser.getByteFrequencyData(average_seg);
-
+  
   var average_all;
-
+  
   average_all = getAverageVolume (average_seg, 0, average_seg.length, 512);
-
+  
   render(average_seg, average_all);
   stats.update();
+  requestAnimationFrame(animate);
 }
 
 function render(average_seg, average_all) {
