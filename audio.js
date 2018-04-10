@@ -23,7 +23,7 @@ var SoundCloudAudioSource = function(player) {
     var self = this;
 
     analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 1024;
+    analyser.fftSize = 2048;
     source = audioCtx.createMediaElementSource(player);
     source.connect(analyser);
     analyser.connect(audioCtx.destination);
@@ -71,7 +71,7 @@ var SoundcloudLoader = function(player,uiUpdater) {
         });
         console.log('loader track', track_url);
         SC.resolve(track_url)
-            .then(function(sound){
+            .then(function(sound) {
                 console.log('sound', sound);
                 if(sound.kind=="playlist"){
                     self.sound = sound;
@@ -79,14 +79,16 @@ var SoundcloudLoader = function(player,uiUpdater) {
                     self.streamUrl = function(){
                         return sound.tracks[self.streamPlaylistIndex].uri + '/stream?client_id=' + client_id;
                     }
-
-                    successCallback();
                 }else{
                     self.sound = sound;
                     self.streamUrl = function(){ return sound.uri + '/stream?client_id=' + client_id; };
-
-                    successCallback();
                 }
+            })
+            .catch(function(err) {
+                self.errorMessage = '';
+                self.errorMessage += err.message;
+                self.errorMessage += 'Make sure the URL has the correct format: https://soundcloud.com/user/title-of-the-track';
+                console.log('error msg: ', self.errorMessage);
             });
         // SC.get('/resolve', { url: track_url }, function(sound) {
         //     if (sound.errors) {
