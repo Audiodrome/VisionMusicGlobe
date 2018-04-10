@@ -71,19 +71,24 @@ var SoundcloudLoader = function(player,uiUpdater) {
                 if(sound.kind=="playlist"){
                     self.sound = sound;
                     self.streamPlaylistIndex = 0;
-                    self.streamUrl = function(){
+                    self.streamUrl = function() {
                         return sound.tracks[self.streamPlaylistIndex].uri + '/stream?client_id=' + client_id;
                     }
+                    successCallback();
                 }else{
                     self.sound = sound;
-                    self.streamUrl = function(){ return sound.uri + '/stream?client_id=' + client_id; };
+                    self.streamUrl = function() { 
+                        return sound.uri + '/stream?client_id=' + client_id; 
+                    };
+                    successCallback();
                 }
             })
             .catch(function(err) {
                 self.errorMessage = '';
-                self.errorMessage += err.message;
+                self.errorMessage += err.message + '<br>';
                 self.errorMessage += 'Make sure the URL has the correct format: https://soundcloud.com/user/title-of-the-track';
                 console.log('error msg: ', self.errorMessage);
+                errorCallback();
             });
     };
 
