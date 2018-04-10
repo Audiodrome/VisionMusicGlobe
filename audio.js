@@ -5,14 +5,11 @@
 var source;
 var analyser;
 var audioCtx = new (window.AudioContext || window.webkitAudioContext);
-//update();
 
 function start() {
     try {
         // Fix up for prefixing
         audioCtx = new (window.AudioContext || window.webkitAudioContext);
-        //w = window.innerWidth;
-        //h = window.innerHeight;
     }
     catch(e) {
         alert('Web Audio API is not supported in this browser');
@@ -37,13 +34,11 @@ var SoundCloudAudioSource = function(player) {
         player.setAttribute('src', streamUrl);
         player.play();
     }
-    //console.log('i got to animate');
-    //animate();
+
     init();
     addData();
     createPoints();
     animate();
-    console.log('i got to animate');
 };
 
 /**
@@ -90,32 +85,7 @@ var SoundcloudLoader = function(player,uiUpdater) {
                 self.errorMessage += 'Make sure the URL has the correct format: https://soundcloud.com/user/title-of-the-track';
                 console.log('error msg: ', self.errorMessage);
             });
-        // SC.get('/resolve', { url: track_url }, function(sound) {
-        //     if (sound.errors) {
-        //         self.errorMessage = "";
-        //         for (var i = 0; i < sound.errors.length; i++) {
-        //             self.errorMessage += sound.errors[i].error_message + '<br>';
-        //         }
-        //         self.errorMessage += 'Make sure the URL has the correct format: https://soundcloud.com/user/title-of-the-track';
-        //         errorCallback();
-        //     } else {
-
-        //         if(sound.kind=="playlist"){
-        //             self.sound = sound;
-        //             self.streamPlaylistIndex = 0;
-        //             self.streamUrl = function(){
-        //                 return sound.tracks[self.streamPlaylistIndex].uri + '/stream?client_id=' + client_id;
-        //             }
-        //             successCallback();
-        //         }else{
-        //             self.sound = sound;
-        //             self.streamUrl = function(){ return sound.uri + '/stream?client_id=' + client_id; };
-        //             successCallback();
-        //         }
-        //     }
-        // });
     };
-
 
     this.directStream = function(direction){
         if(direction=='toggle'){
@@ -142,8 +112,6 @@ var SoundcloudLoader = function(player,uiUpdater) {
             }
         }
     }
-
-
 };
 
 /**
@@ -231,9 +199,6 @@ window.onload = function init() {
     start();
 
     var player =  document.getElementById('player');
-    // player.src = 'https://api.soundcloud.com/tracks/157677326/stream?client_id=17a992358db64d99e492326797fff3e8';
-    // player.controls = true;
-    // player.autoplay = true;
     player.crossOrigin = 'anonymous';
     var uiUpdater = new UiUpdater();
     var loader = new SoundcloudLoader(player,uiUpdater);
@@ -302,8 +267,6 @@ window.onload = function init() {
                 break;
         }   
     }
-
-
 };
 
 function getAverageVolume(array) {
@@ -312,7 +275,7 @@ function getAverageVolume(array) {
  
     var length = array.length;
  
-                // get all the frequency amplitudes
+    // get all the frequency amplitudes
     for (var i = 0; i < length; i++) {
         values += array[i];
     }
