@@ -34,11 +34,18 @@ var SoundCloudAudioSource = function(player) {
 		player.setAttribute('src', streamUrl);
 		player.play();
 	}
+	
+	if (!Detector.webgl) {
+		Detector.addGetWebGLMessage();
+	} else {
+	  	var container = document.getElementById('container');
+    	var globe = new Globe(container);
 
-	init();
-	addData();
-	createPoints();
-	animate();
+		globe.addData();
+		globe.createPoints();
+		globe.animate();
+		document.body.style.backgroundImage = 'none'; // remove loading
+	}
 };
 
 /**
